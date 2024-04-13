@@ -49,7 +49,7 @@ export default function Index() {
           name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Email</FormLabel>
+              <FormLabel>Email*</FormLabel>
               <FormControl>
                 <Input
                   placeholder="your-email@xyz.com"
@@ -57,6 +57,8 @@ export default function Index() {
                   {...field}
                 />
               </FormControl>
+
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -65,7 +67,7 @@ export default function Index() {
           name="password"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>Password*</FormLabel>
               <FormControl>
                 <Input
                   type="password"
@@ -73,6 +75,8 @@ export default function Index() {
                   {...field}
                 />
               </FormControl>
+
+              <FormMessage />
             </FormItem>
           )}
         />
@@ -101,8 +105,6 @@ export default function Index() {
         >
           login
         </Button>
-
-        <FormMessage />
       </form>
     </Form>
   );
