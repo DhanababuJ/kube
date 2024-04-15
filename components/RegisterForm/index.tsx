@@ -100,7 +100,6 @@ export default function Index() {
       !data.companyShortName ||
       !data.file
     ) {
-      alert("no input");
       setIsLoading(false);
       return;
     }
