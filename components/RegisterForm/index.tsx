@@ -66,7 +66,7 @@ export default function Index() {
     resolver: zodResolver(formSchema),
   });
 
-  // Login Handler
+  // Register Handler
   async function onSubmit(formData: z.infer<typeof formSchema>) {
     setIsLoading(true);
     const data = {
@@ -87,7 +87,6 @@ export default function Index() {
       !data.email ||
       !data.password ||
       !data.confirmPassword ||
-      !data.discount ||
       !data.name ||
       !data.number ||
       !data.companyName ||
@@ -145,6 +144,7 @@ export default function Index() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="px-12 py-8 text-xs relative"
         >
+          {!isForm && (
             <>
               {/* Profile Pic */}
               <FormField
@@ -324,6 +324,7 @@ export default function Index() {
                 )}
               />
             </>
+          )}
 
           {isForm && (
             <>
