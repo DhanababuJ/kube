@@ -70,6 +70,10 @@ export default function Index() {
   async function onSubmit(formData: z.infer<typeof formSchema>) {
     setIsLoading(true);
 
+    if (formData) {
+      console.log("submit initiated");
+    }
+
     const data = {
       email: isEmail,
       password: isPassword,
@@ -83,8 +87,6 @@ export default function Index() {
       companyShortName: isCompanyShortName,
       file: isProfilePic,
     };
-
-    console.log(data)
 
     if (
       !data.email ||
