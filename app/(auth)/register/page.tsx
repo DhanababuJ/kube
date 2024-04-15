@@ -53,8 +53,6 @@ export default function Register() {
         <div className="h-full w-1/2 relative border-y bg-main rounded-r-3xl flex justify-center items-center">
           {/* Login Form */}
           <div className="top-12 left-[20%] h-fit w-[30vw] bg-white rounded-xl overflow-hidden">
-            
-
             <RegisterForm />
           </div>
         </div>

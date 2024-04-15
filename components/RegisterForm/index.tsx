@@ -2,7 +2,7 @@
 import { z } from "zod";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import React, { ChangeEvent, useState, FormEvent } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
@@ -22,6 +22,14 @@ import { FaArrowRight } from "react-icons/fa6";
 import { GoArrowLeft } from "react-icons/go";
 
 const formSchema = z.object({
+  file: z.any(),
+  name: z.string(),
+  number: z.string(),
+  companyName: z.string(),
+  discount: z.string().optional(),
+  DOB: z.string(),
+  membershipName: z.string(),
+  companyShortName: z.string(),
   email: z.string().email({
     message: "Invalid email address.",
   }),
@@ -31,18 +39,6 @@ const formSchema = z.object({
   confirmPassword: z.string().min(6, {
     message: "Password must be at least 6 characters.",
   }),
-  file: z.any().refine((value) => value instanceof FileList, {
-    message: "File must be a valid file.",
-  }),
-  name: z.string(),
-  number: z.number().refine((value) => !Number.isNaN(value), {
-    message: "Number must be a valid number.",
-  }),
-  companyName: z.string(),
-  companyShortName: z.string(),
-  membershipName: z.string(),
-  discount: z.string(),
-  DOB: z.string(),
 });
 
 export default function Index() {
@@ -57,26 +53,79 @@ export default function Index() {
   const [isCompanyShortName, setIsCompanyShortName] = useState<string>("");
 
   // Form2
-  const [isEmail, setIsEmail] = useState<string>("");
   const [isDOB, setIsDOB] = useState<string>("");
+  const [isEmail, setIsEmail] = useState<string>("");
   const [isPassword, setIsPassword] = useState<string>("");
   const [isConfirmPassword, setIsConfirmPassword] = useState<string>("");
 
-  // File handling
-  const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files ? e.target.files[0] : null;
-    setIsProfilePic(file);
-  };
+  // Error Handling
+  const [error, setError] = useState<string>("");
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  // Login Handler
+  async function onSubmit(formData: z.infer<typeof formSchema>) {
+    setIsLoading(true);
+    const data = {
+      email: isEmail,
+      password: isPassword,
+      confirmPassword: isConfirmPassword,
+      discount: isDiscount,
+      name: isFullName,
+      number: isMobileNumber,
+      companyName: isCompanyName,
+      DOB: isDOB,
+      membershipName: isMembershipName,
+      companyShortName: isCompanyShortName,
+      file: isProfilePic,
+    };
+
+    if (
+      !data.email ||
+      !data.password ||
+      !data.confirmPassword ||
+      !data.discount ||
+      !data.name ||
+      !data.number ||
+      !data.companyName ||
+      !data.DOB ||
+      !data.membershipName ||
+      !data.companyShortName ||
+      !data.file
+    ) {
+      alert("no input");
+      setIsLoading(false);
+      return;
+    }
+
+    if (data.password !== data.confirmPassword) {
+      alert("Password and Confirm Password Doesn't Match!");
+      setIsLoading(false);
+      return;
+    }
     try {
-      console.log(values);
+      const response = await fetch("http://localhost:4000/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      if (response.ok) {
+        console.log("success");
+      } else {
+        const error = await response.json();
+        setError(error.message);
+      }
     } catch (error) {
-      console.log(error);
+      console.log("Error:", error);
+      setError("Something went wrong");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -96,8 +145,8 @@ export default function Index() {
           onSubmit={form.handleSubmit(onSubmit)}
           className="px-12 py-8 text-xs relative"
         >
-          {!isForm && (
             <>
+              {/* Profile Pic */}
               <FormField
                 control={form.control}
                 name="file"
@@ -109,9 +158,14 @@ export default function Index() {
                     <FormControl>
                       <Input
                         type="file"
-                        accept=".jpg,.jpeg,.png"
-                        {...field}
-                        onChange={handleFileChange}
+                        accept=".jpg,.jpeg,.png,.ico"
+                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                          const file = e.target.files
+                            ? e.target.files[0]
+                            : null;
+                          setIsProfilePic(file);
+                          field.onChange(e);
+                        }}
                       />
                     </FormControl>
 
@@ -120,6 +174,7 @@ export default function Index() {
                 )}
               />
 
+              {/* Full Name */}
               <FormField
                 control={form.control}
                 name="name"
@@ -132,9 +187,9 @@ export default function Index() {
                       <Input
                         placeholder="full name"
                         type="text"
-                        {...field}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           setIsFullName(e.target.value);
+                          field.onChange(e);
                         }}
                       />
                     </FormControl>
@@ -144,6 +199,7 @@ export default function Index() {
                 )}
               />
 
+              {/* Mobile Number */}
               <FormField
                 control={form.control}
                 name="number"
@@ -156,9 +212,9 @@ export default function Index() {
                       <Input
                         placeholder="mobile number"
                         type="text"
-                        {...field}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           setIsMobileNumber(e.target.value);
+                          field.onChange(e);
                         }}
                       />
                     </FormControl>
@@ -168,6 +224,7 @@ export default function Index() {
                 )}
               />
 
+              {/* Company Name */}
               <FormField
                 control={form.control}
                 name="companyName"
@@ -180,9 +237,9 @@ export default function Index() {
                       <Input
                         placeholder="company name"
                         type="text"
-                        {...field}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           setIsCompanyName(e.target.value);
+                          field.onChange(e);
                         }}
                       />
                     </FormControl>
@@ -192,6 +249,7 @@ export default function Index() {
                 )}
               />
 
+              {/* Company Short Name */}
               <FormField
                 control={form.control}
                 name="companyShortName"
@@ -204,9 +262,9 @@ export default function Index() {
                       <Input
                         placeholder="company short name"
                         type="text"
-                        {...field}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           setIsCompanyShortName(e.target.value);
+                          field.onChange(e);
                         }}
                       />
                     </FormControl>
@@ -216,6 +274,7 @@ export default function Index() {
                 )}
               />
 
+              {/* Membership Name */}
               <FormField
                 control={form.control}
                 name="membershipName"
@@ -228,9 +287,9 @@ export default function Index() {
                       <Input
                         placeholder="membership name"
                         type="text"
-                        {...field}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           setIsMembershipName(e.target.value);
+                          field.onChange(e);
                         }}
                       />
                     </FormControl>
@@ -240,6 +299,7 @@ export default function Index() {
                 )}
               />
 
+              {/* Discount */}
               <FormField
                 control={form.control}
                 name="discount"
@@ -252,9 +312,9 @@ export default function Index() {
                       <Input
                         placeholder="discount"
                         type="text"
-                        {...field}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           setIsDiscount(e.target.value);
+                          field.onChange(e);
                         }}
                       />
                     </FormControl>
@@ -264,10 +324,10 @@ export default function Index() {
                 )}
               />
             </>
-          )}
 
           {isForm && (
             <>
+              {/* Email */}
               <FormField
                 control={form.control}
                 name="email"
@@ -280,9 +340,9 @@ export default function Index() {
                       <Input
                         placeholder="your-email@xyz.com"
                         type="email"
-                        {...field}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           setIsEmail(e.target.value);
+                          field.onChange(e);
                         }}
                       />
                     </FormControl>
@@ -292,6 +352,7 @@ export default function Index() {
                 )}
               />
 
+              {/* Password */}
               <FormField
                 control={form.control}
                 name="password"
@@ -304,9 +365,9 @@ export default function Index() {
                       <Input
                         type="password"
                         placeholder="password"
-                        {...field}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           setIsPassword(e.target.value);
+                          field.onChange(e);
                         }}
                       />
                     </FormControl>
@@ -316,6 +377,7 @@ export default function Index() {
                 )}
               />
 
+              {/* Confirm Password */}
               <FormField
                 control={form.control}
                 name="confirmPassword"
@@ -328,9 +390,9 @@ export default function Index() {
                       <Input
                         type="password"
                         placeholder="confirm password"
-                        {...field}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           setIsConfirmPassword(e.target.value);
+                          field.onChange(e);
                         }}
                       />
                     </FormControl>
@@ -340,6 +402,7 @@ export default function Index() {
                 )}
               />
 
+              {/* Date Of Birth */}
               <FormField
                 control={form.control}
                 name="DOB"
@@ -352,9 +415,9 @@ export default function Index() {
                       <Input
                         placeholder="company name"
                         type="date"
-                        {...field}
                         onChange={(e: ChangeEvent<HTMLInputElement>) => {
                           setIsDOB(e.target.value);
+                          field.onChange(e);
                         }}
                       />
                     </FormControl>
@@ -388,9 +451,10 @@ export default function Index() {
           {isForm ? (
             <Button
               disabled={!(isEmail && isPassword && isConfirmPassword && isDOB)}
+              type="submit"
               className="bg-black text-white border border-black w-full h-10 rounded-2xl hover:bg-white hover:text-black transition-all ease-in-out duration-500"
             >
-              Register
+              {isLoading ? "Loading..." : "Register"}
             </Button>
           ) : (
             <Button
@@ -404,13 +468,15 @@ export default function Index() {
                   isMembershipName
                 )
               }
-              type="submit"
+              type="button"
               onClick={() => setIsForm(true)}
               className="bg-black text-white border border-black w-full h-10 rounded-2xl hover:bg-white hover:text-black transition-all ease-in-out duration-500 flex justify-center items-center gap-2"
             >
               Next step <FaArrowRight />
             </Button>
           )}
+
+          {error && <div className="text-red-600 text-xs">{error}</div>}
         </form>
       </Form>
     </>
