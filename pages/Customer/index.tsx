@@ -31,6 +31,9 @@ const formSchema = z.object({
   password: z.string().min(8, {
     message: "Password must be at least 8 characters.",
   }),
+  name: z.string(),
+  phoneNumber: z.string(),
+
 });
 
 export default function Index() {

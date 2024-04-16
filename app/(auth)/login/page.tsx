@@ -34,7 +34,7 @@ export default function Login() {
             </div>
 
             <div className="text-center text-sm">
-              <p className="text-[#CCCC]">Don&apost have an account?</p>
+              <p className="text-[#CCCC]">Don&apos;t have an account?</p>
               <div className="flex justify-center items-center">
                 <Link
                   href={"/register"}
