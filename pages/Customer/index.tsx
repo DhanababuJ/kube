@@ -33,7 +33,9 @@ const formSchema = z.object({
   }),
   name: z.string(),
   phoneNumber: z.string(),
-
+  CompanyName: z.string(),
+  location: z.string(),
+  uniqueID: z.string(),
 });
 
 export default function Index() {
@@ -107,9 +109,63 @@ export default function Index() {
                   )}
                 />
 
+                {/* Company Name */}
+                <FormField
+                  control={form.control}
+                  name="CompanyName"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                        Company name <span className="text-main">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input type="text" placeholder="Company name" />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                
+                {/* Location */}
+                <FormField
+                  control={form.control}
+                  name="location"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                      Location <span className="text-main">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input type="text" placeholder="Location" />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                {/* Unique Membership ID */}
+                <FormField
+                  control={form.control}
+                  name="uniqueID"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>
+                      Unique Membership ID <span className="text-main">*</span>
+                      </FormLabel>
+                      <FormControl>
+                        <Input type="text" placeholder="Unique Membership ID" />
+                      </FormControl>
+
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
                 <Button
                   type="submit"
-                  className="bg-black text-white border border-black w-full h-10 rounded-2xl hover:bg-white hover:text-black transition-all ease-in-out duration-500"
+                  className="bg-black text-white border border-black w-full h-10 rounded-2xl hover:bg-white hover:text-black transition-all ease-in-out duration-500 mt-8"
                 >
                   Create
                 </Button>
