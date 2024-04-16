@@ -21,13 +21,13 @@ export default function Index() {
       </div>
 
       {/* Menus */}
-      <div className="p-8 mt-2 text-gray-500">
+      <div className="p-8 mt-2">
         <h1 className="uppercase text-sm font-bold text-black">Menus</h1>
 
         {menuItems.map((menus, menusKey) => (
           <Link
             key={menusKey}
-            href={"/"}
+            href={menus.href}
             className="flex justify-start items-center gap-2 mt-5"
           >
             <menus.icon className="text-2xl" />
@@ -35,7 +35,7 @@ export default function Index() {
           </Link>
         ))}
 
-        <div className="flex justify-start items-center gap-2 mt-4">
+        <div className="flex justify-start items-center gap-2 mt-5">
           <RiLogoutCircleFill className="text-2xl" />
           <p>Logout</p>
         </div>

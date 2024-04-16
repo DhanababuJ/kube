@@ -1,6 +1,6 @@
 // Icons
 import { IoIosAddCircle } from "react-icons/io";
-import { LuLayoutList } from "react-icons/lu";
+import { FaClipboardList } from "react-icons/fa";
 import { BiSolidOffer } from "react-icons/bi";
 import { MdLocalOffer } from "react-icons/md";
 
@@ -19,17 +19,17 @@ export const menuItems: MenuItem[] = [
     menu: "Customer"
   },
   {
-    href: "/",
-    icon: LuLayoutList,
+    href: "/company-list",
+    icon: FaClipboardList,
     menu: "Company list"
   },
   {
-    href: "/",
+    href: "/coupon-master",
     icon: BiSolidOffer,
     menu: "Coupon master"
   },
   {
-    href: "/",
+    href: "/coupons",
     icon: MdLocalOffer,
     menu: "Coupons"
   },
