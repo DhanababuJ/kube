@@ -48,7 +48,7 @@ export default function Index() {
   const [isDiscount, setIsDiscount] = useState<string>("");
   const [isCompanyName, setIsCompanyName] = useState<string>("");
   const [isMobileNumber, setIsMobileNumber] = useState<string>("");
-  const [isProfilePic, setIsProfilePic] = useState<File | null>(null);
+  // const [isProfilePic, setIsProfilePic] = useState<File | null>(null);
   const [isMembershipName, setIsMembershipName] = useState<string>("");
   const [isCompanyShortName, setIsCompanyShortName] = useState<string>("");
 
@@ -61,6 +61,7 @@ export default function Index() {
   // Error Handling
   const [error, setError] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isSuccess, setIsSuccess] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -70,35 +71,33 @@ export default function Index() {
   async function onSubmit(formData: z.infer<typeof formSchema>) {
     setIsLoading(true);
 
-    if (formData) {
-      console.log("submit initiated");
+    if (!formData) {
+      console.log("Something went wrong!");
     }
 
     const data = {
+      DOB: isDOB,
       email: isEmail,
-      password: isPassword,
-      confirmPassword: isConfirmPassword,
-      discount: isDiscount,
       name: isFullName,
+      password: isPassword,
+      discount: isDiscount,
       number: isMobileNumber,
       companyName: isCompanyName,
-      DOB: isDOB,
       membershipName: isMembershipName,
+      confirmPassword: isConfirmPassword,
       companyShortName: isCompanyShortName,
-      file: isProfilePic,
     };
 
     if (
-      !data.email ||
-      !data.password ||
-      !data.confirmPassword ||
-      !data.name ||
-      !data.number ||
-      !data.companyName ||
       !data.DOB ||
+      !data.name ||
+      !data.email ||
+      !data.number ||
+      !data.password ||
+      !data.companyName ||
       !data.membershipName ||
-      !data.companyShortName ||
-      !data.file
+      !data.confirmPassword ||
+      !data.companyShortName
     ) {
       setIsLoading(false);
       return;
@@ -109,6 +108,7 @@ export default function Index() {
       setIsLoading(false);
       return;
     }
+
     try {
       const response = await fetch("http://localhost:4000/register", {
         method: "POST",
@@ -119,6 +119,7 @@ export default function Index() {
       });
 
       if (response.ok) {
+        setIsSuccess(true);
         console.log("success");
       } else {
         const error = await response.json();
@@ -146,12 +147,13 @@ export default function Index() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
+          encType="multipart/form-data"
           className="px-12 py-8 text-xs relative"
         >
           {!isForm && (
             <>
               {/* Profile Pic */}
-              <FormField
+              {/* <FormField
                 control={form.control}
                 name="file"
                 render={({ field }) => (
@@ -176,7 +178,7 @@ export default function Index() {
                     <FormMessage />
                   </FormItem>
                 )}
-              />
+              /> */}
 
               {/* Full Name */}
               <FormField
@@ -466,7 +468,6 @@ export default function Index() {
               disabled={
                 !(
                   isFullName &&
-                  isProfilePic &&
                   isMobileNumber &&
                   isCompanyName &&
                   isCompanyShortName &&
@@ -482,6 +483,10 @@ export default function Index() {
           )}
 
           {error && <div className="text-red-600 text-xs">{error}</div>}
+
+          {isSuccess && (
+            <div className="text-green text-xs">Register Successfull</div>
+          )}
         </form>
       </Form>
     </>

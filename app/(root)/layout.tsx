@@ -8,7 +8,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "KUBE | Digisailor",
+  title: "KUBE | Home",
   description: "A saas product for business growth",
 };
 

@@ -11,7 +11,7 @@ export default function Login() {
     <main className="bg-backgroundMain h-screen overflow-hidden flex items-center justify-center">
       <section className="flex justify-between h-[85vh] w-[90vw] mt-14 relative">
         {/* Container1 */}
-        <div className="bg-white h-full w-1/2 rounded-r-3xl flex justify-center items-center">
+        <div className="bg-white h-full w-1/2 rounded-l-3xl flex justify-center items-center">
           <div>
             <div className="flex flex-col justify-center items-center py-12">
               <p className="text-lg uppercase">
@@ -50,12 +50,10 @@ export default function Login() {
         </div>
 
         {/* Container 2 */}
-        <div className="h-full w-1/2 relative border-y bg-main rounded-l-3xl flex justify-center items-center">
+        <div className="h-full w-1/2 relative border-y bg-main rounded-r-3xl flex justify-center items-center">
           {/* Login Form */}
           <div className="top-12 left-[20%] h-fit w-[30vw] bg-white rounded-xl py-12 overflow-hidden">
-            <h1 className="pb-4 text-center font-bold">
-              Login into your account
-            </h1>
+            
 
             <LoginForm />
           </div>
