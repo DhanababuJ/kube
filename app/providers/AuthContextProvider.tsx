@@ -1,5 +1,6 @@
 import React, { createContext, useEffect, useState, ReactNode } from "react";
 import { jwtDecode } from "jwt-decode";
+import { JwtPayload as BaseJwtPayload } from "jsonwebtoken";
 
 interface IAuthContext {
   userUid: string;
@@ -12,6 +13,12 @@ interface AuthProviderProps {
   children: ReactNode;
 }
 
+interface JwtPayload extends BaseJwtPayload {
+  role: string;
+  uid: string;
+  userName: string;
+}
+
 export const AuthProvider = ({ children }: AuthProviderProps) => {
   const [userUid, setUserUid] = useState<string>("");
   const [userRole, setUserRole] = useState<string>("");
@@ -21,7 +28,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     const token = sessionStorage.getItem("token");
 
     if (token) {
-      const decodedToken = jwtDecode(token);
+      const decodedToken = jwtDecode<JwtPayload>(token);
       setUserRole(decodedToken.role);
       setUserUid(decodedToken.uid);
       setUserName(decodedToken.userName);

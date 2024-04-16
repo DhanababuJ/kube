@@ -53,8 +53,6 @@ export default function Login() {
         <div className="h-full w-1/2 relative border-y bg-main rounded-r-3xl flex justify-center items-center">
           {/* Login Form */}
           <div className="top-12 left-[20%] h-fit w-[30vw] bg-white rounded-xl py-12 overflow-hidden">
-            
-
             <LoginForm />
           </div>
         </div>

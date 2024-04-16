@@ -1,9 +1,9 @@
 import Link from "next/link";
 import Image from "next/image";
+import { menuItems } from "@/lib/constants";
 
-// Icons
-import { GrAddCircle } from "react-icons/gr";
-import { RiLogoutCircleLine } from "react-icons/ri";
+// Icon
+import { RiLogoutCircleFill } from "react-icons/ri";
 
 export default function Index() {
   return (
@@ -24,13 +24,19 @@ export default function Index() {
       <div className="p-8 mt-2 text-gray-500">
         <h1 className="uppercase text-sm font-bold text-black">Menus</h1>
 
-        <Link href={"/"} className="flex justify-start items-center gap-2 mt-5">
-          <GrAddCircle className="text-2xl" />
-          <p>Create customer</p>
-        </Link>
+        {menuItems.map((menus, menusKey) => (
+          <Link
+            key={menusKey}
+            href={"/"}
+            className="flex justify-start items-center gap-2 mt-5"
+          >
+            <menus.icon className="text-2xl" />
+            <p>{menus.menu}</p>
+          </Link>
+        ))}
 
         <div className="flex justify-start items-center gap-2 mt-4">
-          <RiLogoutCircleLine className="text-2xl" />
+          <RiLogoutCircleFill className="text-2xl" />
           <p>Logout</p>
         </div>
       </div>

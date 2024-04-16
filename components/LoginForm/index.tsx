@@ -60,7 +60,7 @@ export default function Index() {
     }
 
     try {
-      const response = await fetch("http://localhost:4000/user/", {
+      const response = await fetch("http://localhost:4000/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
