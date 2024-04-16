@@ -46,7 +46,7 @@ export default function Index() {
     <section className="text-black p-8">
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value="item-1">
-          <AccordionTrigger>Is it accessible?</AccordionTrigger>
+          <AccordionTrigger>Create Users</AccordionTrigger>
           <AccordionContent>
             <Form {...form}>
               <form
@@ -119,7 +119,7 @@ export default function Index() {
         </AccordionItem>
 
         <AccordionItem value="item-2">
-          <AccordionTrigger>Is it styled?</AccordionTrigger>
+          <AccordionTrigger>Delete Users</AccordionTrigger>
           <AccordionContent>
             Yes. It comes with default styles that matches the other
             components&apos; aesthetic.
@@ -127,7 +127,7 @@ export default function Index() {
         </AccordionItem>
 
         <AccordionItem value="item-3">
-          <AccordionTrigger>Is it animated?</AccordionTrigger>
+          <AccordionTrigger>Block Users</AccordionTrigger>
           <AccordionContent>
             Yes. It&apos;s animated by default, but you can disable it if you
             prefer.
