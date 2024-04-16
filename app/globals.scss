@@ -11,3 +11,8 @@
 img {
   pointer-events: none;
 }
+
+::selection {
+  background-color: green;
+  color: white;
+}
