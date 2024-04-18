@@ -17,7 +17,7 @@ const config: Config = {
     },
     extend: {
       colors: {
-        main: "#B4FF54",
+        main: "#63EC33",
         green: "#7BB82E",
         backgroundMain: "#F8F8F8",
         border: "hsl(var(--border))",

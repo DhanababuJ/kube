@@ -1,4 +1,4 @@
-import "../globals.scss";
+import "./globals.scss";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Sidebar from "@/components/Sidebar";

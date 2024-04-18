@@ -9,7 +9,7 @@ import { FaArrowRight } from "react-icons/fa6";
 export default function Login() {
   return (
     <main className="bg-backgroundMain h-screen overflow-hidden flex items-center justify-center">
-      <section className="flex justify-between h-[85vh] w-[90vw] mt-14 relative">
+      <section className="flex justify-between h-[85vh] w-[90vw] relative">
         {/* Container1 */}
         <div className="bg-white h-full w-1/2 rounded-l-3xl flex justify-center items-center">
           <div>

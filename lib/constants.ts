@@ -1,8 +1,8 @@
 // Icons
-import { IoIosAddCircle } from "react-icons/io";
-import { FaClipboardList } from "react-icons/fa";
-import { BiSolidOffer } from "react-icons/bi";
-import { MdLocalOffer } from "react-icons/md";
+import { IoIosList } from "react-icons/io";
+import { CiBarcode } from "react-icons/ci";
+import { IoAddCircleOutline } from "react-icons/io5";
+import { MdOutlineLocalOffer } from "react-icons/md";
 
 // Interfaces for constants
 interface MenuItem {
@@ -15,22 +15,22 @@ interface MenuItem {
 export const menuItems: MenuItem[] = [
   {
     href: "/",
-    icon: IoIosAddCircle,
-    menu: "Customer"
+    icon: IoAddCircleOutline,
+    menu: "Customer",
   },
   {
     href: "/company-list",
-    icon: FaClipboardList,
-    menu: "Company list"
+    icon: IoIosList,
+    menu: "Company list",
   },
   {
     href: "/coupon-master",
-    icon: BiSolidOffer,
-    menu: "Coupon master"
+    icon: CiBarcode,
+    menu: "Coupon master",
   },
   {
     href: "/coupons",
-    icon: MdLocalOffer,
-    menu: "Coupons"
+    icon: MdOutlineLocalOffer,
+    menu: "Coupons",
   },
 ];

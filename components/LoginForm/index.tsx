@@ -158,7 +158,7 @@ export default function Index() {
               </label>
             </div>
             <div className="flex justify-center items-center gap-2">
-              Already registered?
+              Forget Password?
               <Link href={"/register"} className="text-main underline">
                 click here
               </Link>
