@@ -35,7 +35,7 @@ export default function Index() {
     <section className="h-10 flex items-center justify-between p-8">
       {pathname && (
         <div className="capitalize font-bold tracking-wide">
-          {pathname.replace(/\//g, "Customer ").replace(/-/g, " ")}
+          {pathname.replace("/", " ")}
         </div>
       )}
 
