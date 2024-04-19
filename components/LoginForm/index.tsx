@@ -17,7 +17,6 @@ import { Checkbox } from "../ui/checkbox";
 import { Input } from "@/components/ui/input";
 import React, { useState, ChangeEvent } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Router } from "lucide-react";
 
 const formSchema = z.object({
   email: z.string().email({
@@ -71,13 +70,13 @@ export default function Index() {
       if (response.ok) {
         const responseData = await response.json();
         setIsSuccess(true);
-        sessionStorage.setItem("token", responseData.customToken);
+        localStorage.setItem("token", responseData.customToken);
         console.log("success");
 
         router.push("/");
       } else {
         const error = await response.json();
-        setError(error.message);
+        setError("Please check your email and password!");
       }
     } catch (error) {
       console.log("Error:", error);
@@ -172,6 +171,8 @@ export default function Index() {
           >
             {isLoading ? "Loading..." : "Login"}
           </Button>
+
+          {error && <div className="text-red-600 mt-4">*{error}</div>}
         </form>
       </Form>
     </>

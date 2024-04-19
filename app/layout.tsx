@@ -2,6 +2,8 @@ import "./globals.scss";
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
 import Sidebar from "@/components/Sidebar";
+import Topbar from "@/components/Topbar";
+import { AuthProvider } from "./providers/AuthContextProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,7 +28,12 @@ export default function RootLayout({
             <Sidebar />
           </div>
 
-          <div className="w-full">{children}</div>
+          <div className="w-full">
+            <AuthProvider>
+              <Topbar />
+              {children}
+            </AuthProvider>
+          </div>
         </main>
       </body>
     </html>

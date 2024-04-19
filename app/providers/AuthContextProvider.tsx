@@ -1,43 +1,51 @@
-import React, { createContext, useEffect, useState, ReactNode } from "react";
+"use client";
+import React, { createContext, useState, useEffect, useContext } from "react";
+
 import { jwtDecode } from "jwt-decode";
-import { JwtPayload as BaseJwtPayload } from "jsonwebtoken";
 
-interface IAuthContext {
-  userUid: string;
-  userRole: string;
-  userName: string;
+interface AuthState {
+  email: string | null;
+  uid: string | null;
+  signOut: () => Promise<void>;
 }
 
-export const AuthContext = createContext<IAuthContext | undefined>(undefined);
-interface AuthProviderProps {
-  children: ReactNode;
-}
-
-interface JwtPayload extends BaseJwtPayload {
-  role: string;
+interface TokenPayload {
+  email: string;
   uid: string;
-  userName: string;
 }
 
-export const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [userUid, setUserUid] = useState<string>("");
-  const [userRole, setUserRole] = useState<string>("");
-  const [userName, setUserName] = useState<string>("");
+// Create a context
+const AuthContext = createContext<AuthState | undefined>(undefined);
+
+// Create a provider component
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [email, setEmail] = useState<string | null>(null);
+  const [uid, setUid] = useState<string | null>(null);
+
+  const signOut = async () => {
+    localStorage.removeItem("token");
+  };
 
   useEffect(() => {
-    const token = sessionStorage.getItem("token");
-
+    const token = localStorage.getItem("token");
     if (token) {
-      const decodedToken = jwtDecode<JwtPayload>(token);
-      setUserRole(decodedToken.role);
-      setUserUid(decodedToken.uid);
-      setUserName(decodedToken.userName);
+      const decoded: TokenPayload = jwtDecode<TokenPayload>(token);
+      setEmail(decoded.email);
+      setUid(decoded.uid);
     }
   }, []);
-
+  
   return (
-    <AuthContext.Provider value={{ userRole, userUid, userName }}>
+    <AuthContext.Provider value={{ email, uid, signOut }}>
       {children}
     </AuthContext.Provider>
   );
+};
+
+export const useAuth = (): AuthState => {
+  const context = useContext(AuthContext);
+  if (context === undefined) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
 };

@@ -1,10 +1,4 @@
 "use client";
-// Icons
-import { IoIosAddCircle } from "react-icons/io";
-import { AiFillDelete } from "react-icons/ai";
-import { FaBan } from "react-icons/fa";
-import { MdEditSquare } from "react-icons/md";
-
 import {
   Table,
   TableBody,
@@ -14,9 +8,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 
+// Icons
+import { FaBan } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
+import { MdEditSquare } from "react-icons/md";
+import { IoIosAddCircle } from "react-icons/io";
+
+
 export default function Home() {
+
   return (
-    <section className="text-black px-8 py-5 h-screen overflow-y-scroll">
+    <div className="text-black px-8 py-5 h-screen overflow-y-scroll">
+      
+
       <div className="flex justify-between items-center">
         <div>Customer Management</div>
 
@@ -29,7 +33,7 @@ export default function Home() {
       <div className="mt-8">
         <TableDemo />
       </div>
-    </section>
+    </div>
   );
 }
 
