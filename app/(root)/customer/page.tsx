@@ -9,6 +9,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useState } from "react";
+import { AnimatePresence } from "framer-motion";
 import AddCustomer from "@/components/AddCustomers";
 import { useAuth } from "@/app/providers/AuthContextProvider";
 
@@ -17,7 +18,6 @@ import { FaBan } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
 import { MdEditSquare } from "react-icons/md";
 import { IoIosAddCircle } from "react-icons/io";
-
 
 export default function Customer() {
   const { uid } = useAuth();
@@ -43,7 +43,9 @@ export default function Customer() {
             <TableDemo />
           </div>
 
-          {toggleAdd && <AddCustomer setToggleAdd={setToggleAdd} />}
+          <AnimatePresence>
+            {toggleAdd && <AddCustomer setToggleAdd={setToggleAdd} />}
+          </AnimatePresence>
         </div>
       ) : (
         <div className="flex justify-center items-center gap-4 h-screen">

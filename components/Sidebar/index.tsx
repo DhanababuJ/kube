@@ -74,7 +74,7 @@ export default function Index() {
                 isActive
                   ? "bg-main text-white"
                   : "bg-white text-black hover:text-main"
-              } flex items-center gap-2 p-4 rounded-xl transition-all ease-in-out duration-500`}
+              } flex items-center gap-2 p-4 rounded-xl transition-all ease-in-out duration-500 whitespace-nowrap`}
             >
               <menus.icon className="text-2xl" />
               {!isMenuToggle && <p>{menus.menu}</p>}

@@ -13,7 +13,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { ChangeEvent, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 
 // Icons
 import { IoAddCircleOutline } from "react-icons/io5";
@@ -95,181 +95,173 @@ export default function AddCustomer({ setToggleAdd }: AddCustomerProps) {
   }
 
   return (
-    <AnimatePresence>
+    <div className="fixed top-0 left-0 bg-transparent h-screen w-full flex justify-center items-center">
       <motion.div
         initial={{ scaleY: 0 }}
         animate={{ scaleY: 1 }}
         exit={{ scaleY: 0 }}
-        transition={{ ease: "easeInOut", duration: 0.5 }}
-        className="fixed top-0 left-0 bg-transparent h-screen w-full flex justify-center items-center"
+        transition={{ ease: "easeInOut", delay: 0.3 }}
+        className="bg-white border-4 border-main h-[65vh] w-[30vw] px-12 py-8 rounded-xl relative overflow-hidden"
       >
-        <div className="bg-white border-4 border-main h-[65vh] w-[30vw] px-12 py-8 rounded-xl relative">
-          <div className="flex justify-between items-center">
-            <div></div>
+        <h1 className="text-center bg-white">Add a customer</h1>
 
-            <h1 className="text-center bg-white">Add a customer</h1>
+        {/* Form */}
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="text-xs relative"
+          >
+            {/* Full Name */}
+            <FormField
+              control={form.control}
+              name="fullName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Full Name <span className=" text-main">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="full name"
+                      type="text"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        setIsFullName(e.target.value);
+                        field.onChange(e);
+                      }}
+                    />
+                  </FormControl>
 
-            <div onClick={() => setToggleAdd(false)}>
-              <FaTimes />
-            </div>
-          </div>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-          {/* Form */}
-          <Form {...form}>
-            <form
-              onSubmit={form.handleSubmit(onSubmit)}
-              className="text-xs relative"
-            >
-              {/* Full Name */}
-              <FormField
-                control={form.control}
-                name="fullName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Full Name <span className=" text-main">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        placeholder="full name"
-                        type="text"
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          setIsFullName(e.target.value);
-                          field.onChange(e);
-                        }}
-                      />
-                    </FormControl>
+            {/* Phone Number */}
+            <FormField
+              control={form.control}
+              name="phoneNumber"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Phone Number <span className=" text-main">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="phone number"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        setIsPhoneNumber(e.target.value);
+                        field.onChange(e);
+                      }}
+                    />
+                  </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              {/* Phone Number */}
-              <FormField
-                control={form.control}
-                name="phoneNumber"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Phone Number <span className=" text-main">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="phone number"
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          setIsPhoneNumber(e.target.value);
-                          field.onChange(e);
-                        }}
-                      />
-                    </FormControl>
+            {/* Email Id */}
+            <FormField
+              control={form.control}
+              name="emailId"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Email Id <span className="text-main">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="email ID"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        setIsEmailId(e.target.value);
+                        field.onChange(e);
+                      }}
+                    />
+                  </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              {/* Email Id */}
-              <FormField
-                control={form.control}
-                name="emailId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Email Id <span className="text-main">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="email ID"
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          setIsEmailId(e.target.value);
-                          field.onChange(e);
-                        }}
-                      />
-                    </FormControl>
+            {/* Company Name */}
+            <FormField
+              control={form.control}
+              name="companyName"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Company Name <span className=" text-main">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="company name"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        setIsCompanyName(e.target.value);
+                        field.onChange(e);
+                      }}
+                    />
+                  </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              {/* Company Name */}
-              <FormField
-                control={form.control}
-                name="companyName"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Company Name <span className=" text-main">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="company name"
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          setIsCompanyName(e.target.value);
-                          field.onChange(e);
-                        }}
-                      />
-                    </FormControl>
+            {/* DOB */}
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    DOB <span className="text-main">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="date"
+                      placeholder="date of birth"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        setIsDOB(e.target.value);
+                        field.onChange(e);
+                      }}
+                    />
+                  </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              {/* DOB */}
-              <FormField
-                control={form.control}
-                name="location"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      DOB <span className="text-main">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="date of birth"
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          setIsLocation(e.target.value);
-                          field.onChange(e);
-                        }}
-                      />
-                    </FormControl>
+            {/* Location */}
+            <FormField
+              control={form.control}
+              name="location"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>
+                    Location <span className="text-main">*</span>
+                  </FormLabel>
+                  <FormControl>
+                    <Input
+                      type="text"
+                      placeholder="location"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) => {
+                        setIsLocation(e.target.value);
+                        field.onChange(e);
+                      }}
+                    />
+                  </FormControl>
 
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
-              {/* Location */}
-              <FormField
-                control={form.control}
-                name="location"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>
-                      Location <span className="text-main">*</span>
-                    </FormLabel>
-                    <FormControl>
-                      <Input
-                        type="text"
-                        placeholder="location"
-                        onChange={(e: ChangeEvent<HTMLInputElement>) => {
-                          setIsLocation(e.target.value);
-                          field.onChange(e);
-                        }}
-                      />
-                    </FormControl>
-
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-
+            <div className="flex justify-start items-center gap-4">
               <Button
                 disabled={
                   !(
@@ -288,11 +280,20 @@ export default function AddCustomer({ setToggleAdd }: AddCustomerProps) {
                 {isLoading ? "Loading..." : "Create"}
               </Button>
 
-              {error && <div className="text-red-600 mt-4">*{error}</div>}
-            </form>
-          </Form>
-        </div>
+              <Button
+                type="button"
+                onClick={() => setToggleAdd(false)}
+                className="bg-red-600 text-white border border-red-600 w-fit h-10 rounded-2xl hover:bg-white hover:text-red-600 transition-all ease-in-out duration-500 mt-8 flex justify-center items-center gap-2"
+              >
+                <FaTimes />
+                Cancel
+              </Button>
+            </div>
+
+            {error && <div className="text-red-600 mt-4">*{error}</div>}
+          </form>
+        </Form>
       </motion.div>
-    </AnimatePresence>
+    </div>
   );
 }
