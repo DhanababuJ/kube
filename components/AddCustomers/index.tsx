@@ -19,26 +19,27 @@ import { motion } from "framer-motion";
 import { IoAddCircleOutline } from "react-icons/io5";
 
 const formSchema = z.object({
+  dob: z.string(),
   fullName: z.string(),
+  location: z.string(),
+  companyName: z.string(),
   phoneNumber: z.string(),
   emailId: z.string().email({
     message: "Invalid email address.",
   }),
-  companyName: z.string(),
-  location: z.string(),
 });
 
 interface AddCustomerProps {
   setToggleAdd: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function AddCustomer({ setToggleAdd }: AddCustomerProps) {
-  const [isFullName, setIsFullName] = useState<string>("");
+export default function Index({ setToggleAdd }: AddCustomerProps) {
+  const [isDOB, setIsDOB] = useState<string>("");
   const [isEmailId, setIsEmailId] = useState<string>("");
+  const [isFullName, setIsFullName] = useState<string>("");
+  const [isLocation, setIsLocation] = useState<string>("");
   const [isCompanyName, setIsCompanyName] = useState<string>("");
   const [isPhoneNumber, setIsPhoneNumber] = useState<string>("");
-  const [isLocation, setIsLocation] = useState<string>("");
-  const [isDOB, setIsDOB] = useState<string>("");
 
   // Error Handling
   const [error, setError] = useState<string>("");
@@ -49,25 +50,33 @@ export default function AddCustomer({ setToggleAdd }: AddCustomerProps) {
     resolver: zodResolver(formSchema),
   });
 
-  async function onSubmit(formData: z.infer<typeof formSchema>) {
+  async function onSubmit(formData: z.infer<typeof formSchema>)  {
     setIsLoading(true);
 
-    if (!formData) {
-      console.log("Something went wrong!");
-    }
-
     const data = {
-      email: isEmail,
-      password: isPassword,
+      dob: isDOB,
+      emailID: isEmailId,
+      fullName: isFullName,
+      location: isLocation,
+      companyName: isCompanyName,
+      phoneNumber: isPhoneNumber,
     };
 
-    if (!data.email || !data.password) {
+    if (
+      !data.dob ||
+      !data.emailID ||
+      !data.fullName ||
+      !data.location ||
+      !data.companyName ||
+      !data.phoneNumber ||
+      !formData
+    ) {
       setIsLoading(false);
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:4000/login", {
+      const response = await fetch("http://localhost:4000/customer/add", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -76,15 +85,10 @@ export default function AddCustomer({ setToggleAdd }: AddCustomerProps) {
       });
 
       if (response.ok) {
-        const responseData = await response.json();
         setIsSuccess(true);
-        localStorage.setItem("token", responseData.customToken);
         console.log("success");
-
-        router.push("/");
       } else {
-        const error = await response.json();
-        setError("Please check your email and password!");
+        setError("Something went wrong!");
       }
     } catch (error) {
       console.log("Error:", error);
@@ -92,7 +96,7 @@ export default function AddCustomer({ setToggleAdd }: AddCustomerProps) {
     } finally {
       setIsLoading(false);
     }
-  }
+  };
 
   return (
     <div className="fixed top-0 left-0 bg-transparent h-screen w-full flex justify-center items-center">
@@ -107,10 +111,7 @@ export default function AddCustomer({ setToggleAdd }: AddCustomerProps) {
 
         {/* Form */}
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="text-xs relative"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="text-xs relative">
             {/* Full Name */}
             <FormField
               control={form.control}
@@ -261,6 +262,7 @@ export default function AddCustomer({ setToggleAdd }: AddCustomerProps) {
               )}
             />
 
+            {/* Buttons */}
             <div className="flex justify-start items-center gap-4">
               <Button
                 disabled={
