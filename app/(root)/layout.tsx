@@ -1,9 +1,9 @@
-import "./globals.scss";
+import "../globals.scss";
 import type { Metadata } from "next";
+import Topbar from "@/components/Topbar";
 import { Poppins } from "next/font/google";
 import Sidebar from "@/components/Sidebar";
-import Topbar from "@/components/Topbar";
-import { AuthProvider } from "./providers/AuthContextProvider";
+import { AuthProvider } from "../providers/AuthContextProvider";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -11,7 +11,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "KUBE | Not Found",
+  title: "KUBE | Dashboard",
   description: "A saas product for business growth",
 };
 

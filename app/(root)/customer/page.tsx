@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import {
   Table,
   TableBody,
@@ -7,6 +8,9 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { useState } from "react";
+import AddCustomer from "@/components/AddCustomers";
+import { useAuth } from "@/app/providers/AuthContextProvider";
 
 // Icons
 import { FaBan } from "react-icons/fa";
@@ -14,22 +18,42 @@ import { AiFillDelete } from "react-icons/ai";
 import { MdEditSquare } from "react-icons/md";
 import { IoIosAddCircle } from "react-icons/io";
 
-export default function page() {
+
+export default function Customer() {
+  const { uid } = useAuth();
+  const [toggleAdd, setToggleAdd] = useState<boolean>(false);
+
   return (
-    <div className="text-black px-8 py-5 h-screen overflow-y-scroll">
-      <div className="flex justify-between items-center">
-        <div>Customer Management</div>
+    <>
+      {uid ? (
+        <div className="text-black px-8 py-5 h-screen overflow-y-scroll">
+          <div className="flex justify-between items-center">
+            <div>Customer Management</div>
 
-        <div className="flex justify-center items-center gap-2 bg-main px-4 py-2 rounded-full">
-          <h1>Add customer</h1>
-          <IoIosAddCircle className="text-2xl" />
+            <div
+              onClick={() => setToggleAdd(true)}
+              className="flex justify-center items-center gap-2 bg-main px-4 py-2 rounded-full"
+            >
+              <h1>Add customer</h1>
+              <IoIosAddCircle className="text-2xl" />
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <TableDemo />
+          </div>
+
+          {toggleAdd && <AddCustomer setToggleAdd={setToggleAdd} />}
         </div>
-      </div>
-
-      <div className="mt-8">
-        <TableDemo />
-      </div>
-    </div>
+      ) : (
+        <div className="flex justify-center items-center gap-4 h-screen">
+          <h1>Acces Denied.</h1>
+          <Link href="/login" className="underline">
+            Go to Login
+          </Link>
+        </div>
+      )}
+    </>
   );
 }
 

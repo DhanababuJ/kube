@@ -1,12 +1,15 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 import { useEffect } from "react";
 
 export default function Home() {
   useEffect(() => {
-    router.push("/customer");
+    redirect("/customer");
   }, []);
 
-  const router = useRouter();
-  return <div>please wait...</div>;
+  return (
+    <div className="h-screen flex justify-center items-center">
+      please wait... This page will redirect to customer page.
+    </div>
+  );
 }

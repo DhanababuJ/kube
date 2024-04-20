@@ -1,6 +1,4 @@
 "use client";
-import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
 import { useRouter } from "next/navigation";
 import { usePathname } from "next/navigation";
 import { Input } from "../ui/input";
@@ -62,10 +60,12 @@ export default function Index() {
           <Popover>
             <PopoverTrigger asChild>
               <Avatar>
-                <AvatarImage
-                  src="https://images.pexels.com/photos/20138200/pexels-photo-20138200/free-photo-of-the-cover-of-the-album-with-a-woman-s-face.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
-                  alt="Admin"
-                />
+                {uid && (
+                  <AvatarImage
+                    src="https://images.pexels.com/photos/20138200/pexels-photo-20138200/free-photo-of-the-cover-of-the-album-with-a-woman-s-face.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+                    alt="Admin"
+                  />
+                )}
                 <AvatarFallback>
                   <GoPeople />
                 </AvatarFallback>

@@ -14,10 +14,8 @@ interface TokenPayload {
   uid: string;
 }
 
-// Create a context
 const AuthContext = createContext<AuthState | undefined>(undefined);
 
-// Create a provider component
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [email, setEmail] = useState<string | null>(null);
   const [uid, setUid] = useState<string | null>(null);

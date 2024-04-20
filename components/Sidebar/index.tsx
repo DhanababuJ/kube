@@ -15,8 +15,8 @@ export default function Index() {
   return (
     <aside
       className={`${
-        isMenuToggle ? "w-[10vh]" : "w-[35vh]"
-      } h-screen border-r-2 border-t-2 border-b-2 border-main rounded-tr-3xl transition-all ease-in-out duration-500`}
+        isMenuToggle ? "w-[10vh]" : "w-[30vh]"
+      } h-screen border-r-2 border-t-2 border-b-2 border-main rounded-tr-3xl transition-all ease-in-out duration-500 overflow-hidden`}
     >
       {/* Logo */}
       <div
@@ -33,6 +33,7 @@ export default function Index() {
               alt=""
               height={512}
               width={512}
+              priority
               className="w-16"
             />
           </div>
@@ -43,6 +44,7 @@ export default function Index() {
               alt=""
               height={512}
               width={512}
+              priority
               className="w-10"
             />
           </div>
