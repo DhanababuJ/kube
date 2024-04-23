@@ -18,6 +18,7 @@ import { motion } from "framer-motion";
 // Icons
 import { IoAddCircleOutline } from "react-icons/io5";
 
+
 const formSchema = z.object({
   dob: z.string(),
   fullName: z.string(),
