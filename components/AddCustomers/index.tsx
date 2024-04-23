@@ -11,7 +11,7 @@ import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
-import { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 
@@ -50,8 +50,9 @@ export default function Index({ setToggleAdd }: AddCustomerProps) {
     resolver: zodResolver(formSchema),
   });
 
-  async function onSubmit(formData: z.infer<typeof formSchema>)  {
+  const createCustomer = async (e: React.FormEvent) => {
     setIsLoading(true);
+    e.preventDefault();
 
     const data = {
       dob: isDOB,
@@ -68,8 +69,7 @@ export default function Index({ setToggleAdd }: AddCustomerProps) {
       !data.fullName ||
       !data.location ||
       !data.companyName ||
-      !data.phoneNumber ||
-      !formData
+      !data.phoneNumber
     ) {
       setIsLoading(false);
       return;
@@ -88,7 +88,8 @@ export default function Index({ setToggleAdd }: AddCustomerProps) {
         setIsSuccess(true);
         console.log("success");
       } else {
-        setError("Something went wrong!");
+        const responseData = await response.json();
+        setError(responseData.error);
       }
     } catch (error) {
       console.log("Error:", error);
@@ -105,13 +106,13 @@ export default function Index({ setToggleAdd }: AddCustomerProps) {
         animate={{ scaleY: 1 }}
         exit={{ scaleY: 0 }}
         transition={{ ease: "easeInOut", delay: 0.3 }}
-        className="bg-white border-4 border-main h-[65vh] w-[30vw] px-12 py-8 rounded-xl relative overflow-hidden"
+        className="bg-white border-4 border-main shadow-sm h-[65vh] w-[30vw] px-12 py-8 rounded-xl relative overflow-hidden"
       >
-        <h1 className="text-center bg-white">Add a customer</h1>
+        <h1 className="text-center text-main uppercase text-xl font-bold">Add a customer</h1>
 
         {/* Form */}
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="text-xs relative">
+          <form className="text-xs relative">
             {/* Full Name */}
             <FormField
               control={form.control}
@@ -173,7 +174,8 @@ export default function Index({ setToggleAdd }: AddCustomerProps) {
                   </FormLabel>
                   <FormControl>
                     <Input
-                      type="text"
+                      type="email"
+                      required
                       placeholder="email ID"
                       onChange={(e: ChangeEvent<HTMLInputElement>) => {
                         setIsEmailId(e.target.value);
@@ -275,10 +277,11 @@ export default function Index({ setToggleAdd }: AddCustomerProps) {
                     isDOB
                   )
                 }
+                onClick={createCustomer}
                 type="submit"
                 className="bg-black text-white border border-black w-fit h-10 rounded-2xl hover:bg-white hover:text-black transition-all ease-in-out duration-500 mt-8 flex justify-center items-center gap-2"
               >
-                <IoAddCircleOutline className="text-xl" />{" "}
+                <IoAddCircleOutline className="text-xl" />
                 {isLoading ? "Loading..." : "Create"}
               </Button>
 
@@ -292,7 +295,10 @@ export default function Index({ setToggleAdd }: AddCustomerProps) {
               </Button>
             </div>
 
-            {error && <div className="text-red-600 mt-4">*{error}</div>}
+            {error && !isSuccess && <div className="text-red-600 mt-4">*{error}</div>}
+            {isSuccess && !error && (
+              <div className="text-main mt-4">SuccessFully Added</div>
+            )}
           </form>
         </Form>
       </motion.div>
