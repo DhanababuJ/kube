@@ -81,7 +81,6 @@ export default function Index() {
             </Link>
           );
         })}
-
         <div
           className={`${
             isMenuToggle ? "justify-center" : "justify-start"
