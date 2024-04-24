@@ -6,7 +6,6 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import { zodResolver } from "@hookform/resolvers/zod";
-
 // Icons
 import { IoAddCircleOutline } from "react-icons/io5";
 import { FaTimes } from "react-icons/fa";
@@ -71,7 +70,7 @@ export default function CompanyForm({ setToggleAdd }: AddCompanyProps) {
         animate={{ scaleY: 1 }}
         exit={{ scaleY: 0 }}
         transition={{ ease: "easeInOut", delay: 0.3 }}
-        className="bg-white border-4 border-main shadow-sm h-[65vh] w-[30vw] px-12 py-8 rounded-xl relative overflow-hidden"
+        className="bg-white border-4 border-main shadow-sm h-[70vh] w-[30vw] px-12 py-8 rounded-xl relative overflow-hidden"
       >
         <h1 className="text-center text-main uppercase text-xl font-bold">Add a Company</h1>
 
@@ -194,7 +193,7 @@ export default function CompanyForm({ setToggleAdd }: AddCompanyProps) {
 
             {error && !isSuccess && <div className="text-red-600 mt-4">*{error}</div>}
             {isSuccess && !error && (
-              <div className="text-main mt-4">Successfully Added</div>
+              <div className="text-main mt-4">SuccessFully Added</div>
             )}
           </form>
         </Form>
